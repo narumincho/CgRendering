@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 /** @type import('webpack').Configuration */
 module.exports = {
     mode: "development",
-    entry: path.resolve(__dirname, "src", "app.ts"),
+    entry: path.resolve(__dirname, "src", "app00.ts"),
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "app.js"
@@ -19,13 +19,15 @@ module.exports = {
                 use: "ts-loader"
             },
             {
-                test: /\.js$/,
-                include: [
-                    path.resolve(__dirname, "node_modules/three/examples/js")
-                ],
-                use: "imports-loader?THREE=three"
+                test: /\.(vs|fs|txt)$/,
+                include: [path.resolve(__dirname, "src")],
+                use: "raw-loader"
             }
         ]
     },
-    plugins: [new HtmlWebpackPlugin()]
+    plugins: [new HtmlWebpackPlugin()],
+    devServer: {
+        contentBase: path.resolve(__dirname, "dist"),
+        port: 8080
+    }
 };
