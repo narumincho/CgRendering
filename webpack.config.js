@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 /** @type import('webpack').Configuration */
 module.exports = {
     mode: "development",
-    entry: path.resolve(__dirname, "src", "app04.ts"),
+    entry: path.resolve(__dirname, "src", "app06.ts"),
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "app.js"
