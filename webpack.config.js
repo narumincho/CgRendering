@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 /** @type import('webpack').Configuration */
 module.exports = {
     mode: "development",
-    entry: path.resolve(__dirname, "src", "app06.ts"),
+    entry: path.resolve(__dirname, "src", "app04.ts"),
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "app.js"
@@ -17,11 +17,6 @@ module.exports = {
             {
                 test: /\.ts$/,
                 use: "ts-loader"
-            },
-            {
-                test: /\.(vs|fs|txt)$/,
-                include: [path.resolve(__dirname, "src")],
-                use: "raw-loader"
             }
         ]
     },
