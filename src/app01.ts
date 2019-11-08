@@ -81,7 +81,7 @@ const xCamera = makeCamera(new THREE.Vector3(3, 0, 0));
 const yCamera = makeCamera(new THREE.Vector3(0, 3, 0));
 const zCamera = makeCamera(new THREE.Vector3(0, 0, 3));
 
-const loop = () => {
+const loop = (): void => {
     mainRender.setSize(
         mainRender.domElement.clientWidth,
         mainRender.domElement.clientHeight,

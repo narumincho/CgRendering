@@ -79,7 +79,7 @@ const camera = new three.OrthographicCamera(
 camera.position.copy(new three.Vector3(10, 10, 10));
 camera.lookAt(new three.Vector3(0, 0, 0));
 
-const update = () => {
+const update = (): void => {
     camera.left = -cameraWidth / 2;
     camera.right = cameraWidth / 2;
     camera.top = (cameraWidth * canvasElement.height) / canvasElement.width / 2;

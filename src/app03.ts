@@ -43,7 +43,36 @@ const keys: Record<MaterialId, string> = {
     phongWireframe: "b"
 };
 
-let buttonElements: Map<MaterialId, HTMLButtonElement> = new Map();
+const buttonElements: Map<MaterialId, HTMLButtonElement> = new Map();
+
+const materialColor: three.Color = new three.Color(0x55ff00);
+
+const materials: Record<MaterialId, three.Material> = {
+    normal: new three.MeshNormalMaterial(),
+    lambert: new three.MeshLambertMaterial(),
+    phongSmooth: new three.MeshPhongMaterial({ color: materialColor }),
+    phongFlat: new three.MeshPhongMaterial({
+        color: materialColor,
+        flatShading: true
+    }),
+    phongWireframe: new three.MeshPhongMaterial({
+        color: materialColor,
+        wireframe: true
+    })
+};
+const geometry = new three.TorusGeometry(2, 0.5, 16, 100);
+
+const mesh: three.Mesh = new three.Mesh(geometry, materials[selectedMaterial]);
+
+const updateMaterial = (): void => {
+    for (const [materialId, buttonElement] of buttonElements.entries()) {
+        buttonElement.disabled = materialId === selectedMaterial;
+    }
+    console.log(selectedMaterial);
+    mesh.material = materials[selectedMaterial];
+};
+updateMaterial();
+
 for (const label of Object.keys(keys)) {
     const labelText = label as MaterialId;
     const button = document.createElement("button");
@@ -67,29 +96,12 @@ addEventListener("keydown", e => {
     }
 });
 
-const materialColor: three.Color = new three.Color(0x55ff00);
-
-const materials: Record<MaterialId, three.Material> = {
-    normal: new three.MeshNormalMaterial(),
-    lambert: new three.MeshLambertMaterial(),
-    phongSmooth: new three.MeshPhongMaterial({ color: materialColor }),
-    phongFlat: new three.MeshPhongMaterial({
-        color: materialColor,
-        flatShading: true
-    }),
-    phongWireframe: new three.MeshPhongMaterial({
-        color: materialColor,
-        wireframe: true
-    })
-};
-
 const renderer = new three.WebGLRenderer({ canvas: canvasElement });
 renderer.setClearColor(new three.Color(0x000000));
 renderer.shadowMap.enabled = true;
 const scene = new three.Scene();
 scene.add(new three.AxesHelper(3));
 
-const geometry = new three.TorusGeometry(2, 0.5, 16, 100);
 {
     const light: THREE.Light = new three.DirectionalLight(0xffffff);
     light.position.copy(new three.Vector3(10, 10, 10));
@@ -107,19 +119,9 @@ camera.position.copy(new three.Vector3(3, 3, 3));
 camera.lookAt(new three.Vector3(0, 0, 0));
 
 console.log(materials[selectedMaterial]);
-let mesh: three.Mesh = new three.Mesh(geometry, materials[selectedMaterial]);
 scene.add(mesh);
 
-const updateMaterial = () => {
-    for (const [materialId, buttonElement] of buttonElements.entries()) {
-        buttonElement.disabled = materialId === selectedMaterial;
-    }
-    console.log(selectedMaterial);
-    mesh.material = materials[selectedMaterial];
-};
-updateMaterial();
-
-const loop = () => {
+const loop = (): void => {
     mesh.rotateX(0.02);
 
     renderer.setSize(

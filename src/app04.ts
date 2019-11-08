@@ -55,7 +55,7 @@ const orbitControls = new OrbitControls(camera, renderer.domElement);
 
 let count = 0;
 
-const loop = () => {
+const loop = (): void => {
     orbitControls.update();
 
     for (let i = 0; i < meshList.length; i++) {

@@ -68,7 +68,7 @@ camera.position.copy(new three.Vector3(3, 3, 3));
 camera.lookAt(new three.Vector3(0, 0, 0));
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 
-const loop = () => {
+const loop = (): void => {
     time.value = performance.now() / 1000;
     orbitControls.update();
     renderer.setSize(
