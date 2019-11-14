@@ -1,8 +1,5 @@
 {
     "name": "cg-rendering",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
     "dependencies": {
         "three": "^0.110.0"
     },
@@ -21,5 +18,7 @@
         "webpack-dev-server": "^3.9.0"
     },
     "author": "narumincho",
-    "license": "ISC"
+    "scripts": {
+        "start": "webpack-dev-server"
+    }
 }
