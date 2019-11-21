@@ -1,7 +1,10 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-/** @type import('webpack').Configuration */
+/**
+ * @type import('webpack').Configuration
+ */
 module.exports = {
     mode: "development",
     entry: path.resolve(__dirname, "src", "app08", "app08.ts"),
@@ -20,12 +23,22 @@ module.exports = {
             },
             {
                 test: /\.(vs|fs|txt)$/,
-                include: [path.resolve(__dirname, "src", "app08")],
+                include: [path.resolve(__dirname, "src")],
                 use: "raw-loader"
             }
         ]
     },
-    plugins: [new HtmlWebpackPlugin()],
+    plugins: [
+        new HtmlWebpackPlugin(),
+        new CopyWebpackPlugin([
+            { from: "*.png", context: "src" },
+            { from: "*.jpg", context: "src" },
+            { from: "*.gif", context: "src" },
+            { from: "*.dae", context: "src/app08" },
+            { from: "*.dae", context: "src" }
+        ])
+    ],
+    devtool: "inline-source-map",
     devServer: {
         contentBase: path.resolve(__dirname, "dist"),
         port: 1090
