@@ -1,7 +1,7 @@
 {
     "name": "cg-rendering",
     "dependencies": {
-        "three": "^0.110.0"
+        "three": "^0.111.0"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^2.9.0",
