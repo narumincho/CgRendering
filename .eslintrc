@@ -15,6 +15,9 @@
     },
     "rules": {
         "@typescript-eslint/indent": ["error", 4],
-        "prettier/prettier": "off"
+        "@typescript-eslint/assertionStyle": ["error", "as"],
+        "@typescript-eslint/array-type": ["error", "generic"],
+        "prettier/prettier": "off",
+        "no-var": "error"
     }
 }
