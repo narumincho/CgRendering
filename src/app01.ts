@@ -45,16 +45,16 @@ zRender.setClearColor(new THREE.Color(0x000000));
 zRender.setSize(100, 100, false);
 
 axisContainer.append(
-    xRender.domElement,
-    yRender.domElement,
-    zRender.domElement
+  xRender.domElement,
+  yRender.domElement,
+  zRender.domElement
 );
 
 const scene = new THREE.Scene();
 scene.add(new THREE.AxesHelper(3));
 const box = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshPhongMaterial({ color: 0x33ddff })
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshPhongMaterial({ color: 0x33ddff })
 );
 scene.add(box);
 
@@ -65,15 +65,15 @@ light.castShadow = true;
 scene.add(light);
 
 const makeCamera = (position: THREE.Vector3): THREE.PerspectiveCamera => {
-    const camera = new THREE.PerspectiveCamera(
-        75,
-        mainRender.domElement.clientWidth / mainRender.domElement.clientHeight,
-        0.1,
-        1000
-    );
-    camera.position.copy(position);
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
-    return camera;
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    mainRender.domElement.clientWidth / mainRender.domElement.clientHeight,
+    0.1,
+    1000
+  );
+  camera.position.copy(position);
+  camera.lookAt(new THREE.Vector3(0, 0, 0));
+  return camera;
 };
 
 const mainCamera = makeCamera(new THREE.Vector3(3, 3, 3));
@@ -82,46 +82,46 @@ const yCamera = makeCamera(new THREE.Vector3(0, 3, 0));
 const zCamera = makeCamera(new THREE.Vector3(0, 0, 3));
 
 const loop = (): void => {
-    mainRender.setSize(
-        mainRender.domElement.clientWidth,
-        mainRender.domElement.clientHeight,
-        false
-    );
-    mainCamera.aspect =
-        mainRender.domElement.clientWidth / mainRender.domElement.clientHeight;
-    mainCamera.updateProjectionMatrix();
-    mainRender.render(scene, mainCamera);
+  mainRender.setSize(
+    mainRender.domElement.clientWidth,
+    mainRender.domElement.clientHeight,
+    false
+  );
+  mainCamera.aspect =
+    mainRender.domElement.clientWidth / mainRender.domElement.clientHeight;
+  mainCamera.updateProjectionMatrix();
+  mainRender.render(scene, mainCamera);
 
-    xRender.setSize(
-        xRender.domElement.clientWidth,
-        xRender.domElement.clientHeight,
-        false
-    );
-    xCamera.aspect =
-        xRender.domElement.clientWidth / xRender.domElement.clientHeight;
-    xCamera.updateProjectionMatrix();
-    xRender.render(scene, xCamera);
+  xRender.setSize(
+    xRender.domElement.clientWidth,
+    xRender.domElement.clientHeight,
+    false
+  );
+  xCamera.aspect =
+    xRender.domElement.clientWidth / xRender.domElement.clientHeight;
+  xCamera.updateProjectionMatrix();
+  xRender.render(scene, xCamera);
 
-    yRender.setSize(
-        yRender.domElement.clientWidth,
-        yRender.domElement.clientHeight,
-        false
-    );
-    yCamera.aspect =
-        yRender.domElement.clientWidth / yRender.domElement.clientHeight;
-    yCamera.updateProjectionMatrix();
-    yRender.render(scene, yCamera);
+  yRender.setSize(
+    yRender.domElement.clientWidth,
+    yRender.domElement.clientHeight,
+    false
+  );
+  yCamera.aspect =
+    yRender.domElement.clientWidth / yRender.domElement.clientHeight;
+  yCamera.updateProjectionMatrix();
+  yRender.render(scene, yCamera);
 
-    zRender.setSize(
-        zRender.domElement.clientWidth,
-        zRender.domElement.clientHeight,
-        false
-    );
-    zCamera.aspect =
-        zRender.domElement.clientWidth / zRender.domElement.clientHeight;
-    zCamera.updateProjectionMatrix();
-    zRender.render(scene, zCamera);
+  zRender.setSize(
+    zRender.domElement.clientWidth,
+    zRender.domElement.clientHeight,
+    false
+  );
+  zCamera.aspect =
+    zRender.domElement.clientWidth / zRender.domElement.clientHeight;
+  zCamera.updateProjectionMatrix();
+  zRender.render(scene, zCamera);
 
-    requestAnimationFrame(loop);
+  requestAnimationFrame(loop);
 };
 loop();

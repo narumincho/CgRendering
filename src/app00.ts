@@ -25,41 +25,41 @@ document.body.append(canvasElement);
 const scene = new THREE.Scene();
 const xAxisGeometry = new THREE.Geometry();
 xAxisGeometry.vertices.push(
-    new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(8, 0, 0)
+  new THREE.Vector3(0, 0, 0),
+  new THREE.Vector3(8, 0, 0)
 );
 scene.add(
-    new THREE.Line(
-        xAxisGeometry,
-        new THREE.LineBasicMaterial({ color: 0xff0000 })
-    )
+  new THREE.Line(
+    xAxisGeometry,
+    new THREE.LineBasicMaterial({ color: 0xff0000 })
+  )
 );
 const yAxisGeometry = new THREE.Geometry();
 yAxisGeometry.vertices.push(
-    new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(0, 8, 0)
+  new THREE.Vector3(0, 0, 0),
+  new THREE.Vector3(0, 8, 0)
 );
 scene.add(
-    new THREE.Line(
-        yAxisGeometry,
-        new THREE.LineBasicMaterial({ color: 0x00ff00 })
-    )
+  new THREE.Line(
+    yAxisGeometry,
+    new THREE.LineBasicMaterial({ color: 0x00ff00 })
+  )
 );
 const zAxisGeometry = new THREE.Geometry();
 zAxisGeometry.vertices.push(
-    new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(0, 0, 8)
+  new THREE.Vector3(0, 0, 0),
+  new THREE.Vector3(0, 0, 8)
 );
 scene.add(
-    new THREE.Line(
-        zAxisGeometry,
-        new THREE.LineBasicMaterial({ color: 0x0000ff })
-    )
+  new THREE.Line(
+    zAxisGeometry,
+    new THREE.LineBasicMaterial({ color: 0x0000ff })
+  )
 );
 
 const box = new THREE.Mesh(
-    new THREE.BoxGeometry(10, 10, 10),
-    new THREE.MeshDistanceMaterial({})
+  new THREE.BoxGeometry(10, 10, 10),
+  new THREE.MeshDistanceMaterial({})
 );
 box.castShadow = true;
 scene.add(box);
@@ -72,7 +72,7 @@ light.shadow.camera = new THREE.OrthographicCamera(-30, 30, -30, 30);
 scene.add(light);
 
 const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
-    canvas: canvasElement
+  canvas: canvasElement
 });
 const canvasWidth = canvasElement.clientWidth;
 const canvasHeight = canvasElement.clientHeight;
@@ -81,10 +81,10 @@ renderer.setClearColor(new THREE.Color(0x000000));
 renderer.shadowMap.enabled = true;
 // カメラの設定
 const camera = new THREE.PerspectiveCamera(
-    75,
-    canvasWidth / canvasHeight,
-    0.1,
-    1000
+  75,
+  canvasWidth / canvasHeight,
+  0.1,
+  1000
 );
 camera.position.set(10, 10, 10);
 camera.lookAt(new THREE.Vector3(0, 0, 0));
@@ -92,18 +92,18 @@ camera.lookAt(new THREE.Vector3(0, 0, 0));
 const orbitControls = new OrbitControls(camera, canvasElement);
 
 const update = (): void => {
-    orbitControls.update();
+  orbitControls.update();
 
-    renderer.setSize(
-        canvasElement.clientWidth,
-        canvasElement.clientHeight,
-        false
-    );
+  renderer.setSize(
+    canvasElement.clientWidth,
+    canvasElement.clientHeight,
+    false
+  );
 
-    camera.aspect = canvasElement.clientWidth / canvasElement.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.render(scene, camera);
+  camera.aspect = canvasElement.clientWidth / canvasElement.clientHeight;
+  camera.updateProjectionMatrix();
+  renderer.render(scene, camera);
 
-    requestAnimationFrame(update);
+  requestAnimationFrame(update);
 };
 update();
