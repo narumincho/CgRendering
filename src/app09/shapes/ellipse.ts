@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { BaseShape } from "./baseshape";
 import { PointLight } from "../pointlight";
-import { WebGLMultisampleRenderTarget } from "three";
 
 export class Ellipse implements BaseShape {
   private mpositioin: THREE.Vector3;
@@ -96,6 +95,32 @@ export class Ellipse implements BaseShape {
   }
 
   calcShading(q: PointLight, p: THREE.Vector3, e: THREE.Vector3): THREE.Color {
-    return this.color;
+    const ambientLight = this.ka;
+    const r = q.position.distanceTo(p);
+    const N: THREE.Vector3 = this.calcNorm(p);
+    const L: THREE.Vector3 = q.position
+      .clone()
+      .sub(p)
+      .normalize();
+
+    const diffuseReflection = ((this.kd * q.ii) / r ** 2) * N.dot(L);
+
+    const R: THREE.Vector3 = N.clone()
+      .multiplyScalar(2 * N.dot(L))
+      .sub(L);
+
+    const V: THREE.Vector3 = e
+      .clone()
+      .sub(p)
+      .normalize();
+
+    const specularReflection = ((this.ks * q.ii) / r ** 2) * R.dot(V) ** this.n;
+    if (0 < N.dot(L)) {
+      return this.color
+        .clone()
+        .multiplyScalar(ambientLight + diffuseReflection)
+        .add(new THREE.Color(255, 255, 255).multiplyScalar(specularReflection));
+    }
+    return this.color.clone().multiplyScalar(ambientLight);
   }
 }
