@@ -48,7 +48,7 @@ export class Triangle implements BaseShape {
     is: number,
     n: number
   ) {
-    this.mverticies = new Array();
+    this.mverticies = [];
     this.mverticies[0] = new THREE.Vector3().copy(p0);
     this.mverticies[1] = new THREE.Vector3().copy(p1);
     this.mverticies[2] = new THREE.Vector3().copy(p2);
@@ -60,11 +60,11 @@ export class Triangle implements BaseShape {
     this.mn = n;
 
     //法線を計算，時計回りを表面とする
-    var v1 = new THREE.Vector3().subVectors(
+    const v1 = new THREE.Vector3().subVectors(
       this.verticies[2],
       this.verticies[0]
     );
-    var v2 = new THREE.Vector3().subVectors(
+    const v2 = new THREE.Vector3().subVectors(
       this.verticies[1],
       this.verticies[0]
     );

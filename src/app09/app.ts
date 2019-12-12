@@ -73,7 +73,7 @@ class ThreeJSContainer {
     width: number,
     height: number,
     cameraPos: THREE.Vector3
-  ) => {
+  ): HTMLCanvasElement => {
     const canvas = document.createElement("canvas");
     canvas.width = width;
     canvas.height = height;
