@@ -9,7 +9,7 @@ import rtScene from "./scenes/scene4";
 class ThreeJSContainer {
   private bgcolor: THREE.Color;
   private pointlight: PointLight;
-  private shapes: BaseShape[];
+  private shapes: Array<BaseShape>;
 
   constructor() {
     const s = rtScene;
@@ -107,7 +107,7 @@ class ThreeJSContainer {
         }
 
         const index = x + y * img.width;
-        if (nearest.shape != undefined) {
+        if (nearest.shape !== undefined) {
           const hitpos = new THREE.Vector3();
           hitpos.copy(cameraPos);
           hitpos.add(v.multiplyScalar(nearest.t));

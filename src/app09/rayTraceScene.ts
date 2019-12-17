@@ -1,4 +1,4 @@
-export default interface Scene {
+type Scene = {
   pointlight: {
     x: number;
     y: number;
@@ -10,7 +10,7 @@ export default interface Scene {
     g: number;
     b: number;
   };
-  ellipses: {
+  ellipses: Array<{
     x: number;
     y: number;
     z: number;
@@ -18,8 +18,8 @@ export default interface Scene {
     b: number;
     c: number;
     material: Material;
-  }[];
-  triangles: {
+  }>;
+  triangles: Array<{
     x0: number;
     y0: number;
     z0: number;
@@ -30,10 +30,12 @@ export default interface Scene {
     y2: number;
     z2: number;
     material: Material;
-  }[];
-}
+  }>;
+};
 
-interface Material {
+export default Scene;
+
+type Material = {
   r: number;
   g: number;
   b: number;
@@ -41,4 +43,4 @@ interface Material {
   id: number;
   is: number;
   n: number;
-}
+};

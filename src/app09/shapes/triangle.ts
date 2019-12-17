@@ -3,8 +3,8 @@ import { BaseShape } from "./baseshape";
 import { PointLight } from "../pointlight";
 
 export class Triangle implements BaseShape {
-  private mverticies: THREE.Vector3[];
-  get verticies(): THREE.Vector3[] {
+  private mverticies: Array<THREE.Vector3>;
+  get verticies(): Array<THREE.Vector3> {
     return this.mverticies;
   }
 
