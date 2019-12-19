@@ -25,7 +25,7 @@ export class RaytraceManager {
     );
     this.shapes = [];
     for (const ellipse of s.ellipses) {
-      const ellipseClone = new Ellipse(
+      const ellipseCloned = new Ellipse(
         new THREE.Vector3(ellipse.x, ellipse.y, ellipse.z),
         new THREE.Vector3(ellipse.a, ellipse.b, ellipse.c),
         new THREE.Color(
@@ -38,7 +38,7 @@ export class RaytraceManager {
         ellipse.material.is,
         ellipse.material.n
       );
-      this.shapes.push(ellipseClone);
+      this.shapes.push(ellipseCloned);
     }
 
     for (let i = 0; i < s.triangles.length; i++) {
@@ -77,11 +77,14 @@ export class RaytraceManager {
     v: THREE.Vector3,
     currentDepth: number
   ) => {
-    const nearest = { shape: <BaseShape>undefined, t: Number.MAX_VALUE };
-    for (let i = 0; i < this.shapes.length; i++) {
-      const tmpt = this.shapes[i].calcT(e, v);
+    const nearest = {
+      shape: undefined as BaseShape | undefined,
+      t: Number.MAX_VALUE
+    };
+    for (const shape of this.shapes) {
+      const tmpt = shape.calcT(e, v);
       if (tmpt > 0 && tmpt < nearest.t) {
-        nearest.shape = this.shapes[i];
+        nearest.shape = shape;
         nearest.t = tmpt;
       }
     }
