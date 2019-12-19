@@ -52,10 +52,28 @@ export class Ellipse implements BaseShape {
         this.mn = n;
     }
 
-    calcT(e: THREE.Vector3, v: THREE.Vector3): number {
-        //第9回課題
-        return -1;
+  calcT(e: THREE.Vector3, v: THREE.Vector3): number {
+    // 第9回課題
+    const k = 1;
+    const r0d = new THREE.Vector3();
+    r0d.subVectors(e, this.position);
+    const m = new THREE.Matrix4();
+    m.scale(
+      new THREE.Vector3(
+        1 / this.msize.x ** 2,
+        1 / this.msize.y ** 2,
+        1 / this.msize.z ** 2
+      )
+    );
+    const alpha = v.dot(v.clone().applyMatrix4(m));
+    const beta = v.dot(r0d.clone().applyMatrix4(m));
+    const gamma = r0d.dot(r0d.clone().applyMatrix4(m)) - k;
+    const d = beta * beta - alpha * gamma;
+    if (d < 0) {
+      return -2;
     }
+    return (-beta - Math.sqrt(d)) / alpha;
+  }
 
     calcNorm(p: THREE.Vector3): THREE.Vector3 {
         const mscale = new THREE.Matrix4().scale(new THREE.Vector3(1 / (this.size.x * this.size.x), 1 / (this.size.y * this.size.y), 1 / (this.size.z * this.size.z)));
@@ -64,9 +82,41 @@ export class Ellipse implements BaseShape {
         return postop.applyMatrix4(mscale).normalize();
     }
 
-    calcShading(q: PointLight, p: THREE.Vector3, e: THREE.Vector3, v: THREE.Vector3, shootRay: ShootRay, currentDepth: number): THREE.Color {
-        //第10回課題
-        return this.color;
-    }
+  calcShading(
+    q: PointLight,
+    p: THREE.Vector3,
+    e: THREE.Vector3,
+    v: THREE.Vector3,
+    shootRay: ShootRay,
+    currentDepth: number
+  ): THREE.Color {
+    //第10回課題
+    const ambientLight = this.ka;
+    const r = q.position.distanceTo(p);
+    const N: THREE.Vector3 = this.calcNorm(p);
+    const L: THREE.Vector3 = q.position
+      .clone()
+      .sub(p)
+      .normalize();
 
+    const diffuseReflection = ((this.kd * q.ii) / r ** 2) * N.dot(L);
+
+    const R: THREE.Vector3 = N.clone()
+      .multiplyScalar(2 * N.dot(L))
+      .sub(L);
+
+    const V: THREE.Vector3 = e
+      .clone()
+      .sub(p)
+      .normalize();
+
+    const specularReflection = ((this.ks * q.ii) / r ** 2) * R.dot(V) ** this.n;
+    if (0 < N.dot(L)) {
+      return this.color
+        .clone()
+        .multiplyScalar(ambientLight + diffuseReflection)
+        .add(new THREE.Color(255, 255, 255).multiplyScalar(specularReflection));
+    }
+    return this.color.clone().multiplyScalar(ambientLight);
+  }
 }
