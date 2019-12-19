@@ -6,43 +6,39 @@ import { Triangle } from "./shapes/triangle";
 import { ShootRay } from "./@types/ShootRay";
 
 import rtScene from "./scenes/scene4";
+import { Font } from "three";
 
 export class RaytraceManager {
-  private bgcolor: THREE.Color;
-  private pointlight: PointLight;
+  private bgColor: THREE.Color;
+  private pointLight: PointLight;
   private shapes: Array<BaseShape>;
 
   public static readonly MAX_DEPTH = 5;
 
   constructor() {
-    this.loadScene();
-  }
-
-  // シーンの読み込み
-  private loadScene = () => {
     const s = rtScene;
 
-    this.bgcolor = new THREE.Color(s.bgcolor.r, s.bgcolor.g, s.bgcolor.b);
-    this.pointlight = new PointLight(
+    this.bgColor = new THREE.Color(s.bgcolor.r, s.bgcolor.g, s.bgcolor.b);
+    this.pointLight = new PointLight(
       new THREE.Vector3(s.pointlight.x, s.pointlight.y, s.pointlight.z),
       s.pointlight.ii
     );
     this.shapes = [];
-    for (let i = 0; i < s.ellipses.length; i++) {
-      const ellipse = new Ellipse(
-        new THREE.Vector3(s.ellipses[i].x, s.ellipses[i].y, s.ellipses[i].z),
-        new THREE.Vector3(s.ellipses[i].a, s.ellipses[i].b, s.ellipses[i].c),
+    for (const ellipse of s.ellipses) {
+      const ellipseClone = new Ellipse(
+        new THREE.Vector3(ellipse.x, ellipse.y, ellipse.z),
+        new THREE.Vector3(ellipse.a, ellipse.b, ellipse.c),
         new THREE.Color(
-          s.ellipses[i].material.r,
-          s.ellipses[i].material.g,
-          s.ellipses[i].material.b
+          ellipse.material.r,
+          ellipse.material.g,
+          ellipse.material.b
         ),
-        s.ellipses[i].material.ia,
-        s.ellipses[i].material.id,
-        s.ellipses[i].material.is,
-        s.ellipses[i].material.n
+        ellipse.material.ia,
+        ellipse.material.id,
+        ellipse.material.is,
+        ellipse.material.n
       );
-      this.shapes.push(ellipse);
+      this.shapes.push(ellipseClone);
     }
 
     for (let i = 0; i < s.triangles.length; i++) {
@@ -74,7 +70,7 @@ export class RaytraceManager {
       );
       this.shapes.push(triangle);
     }
-  };
+  }
 
   private shootRay: ShootRay = (
     e: THREE.Vector3,
@@ -95,7 +91,7 @@ export class RaytraceManager {
       hitpos.copy(e);
       hitpos.add(v.multiplyScalar(nearest.t));
       const objcol = nearest.shape.calcShading(
-        this.pointlight,
+        this.pointLight,
         hitpos,
         e,
         v,
@@ -104,7 +100,7 @@ export class RaytraceManager {
       );
       return objcol;
     }
-    return this.bgcolor;
+    return this.bgColor;
   };
 
   // 画面部分の作成(表示する枠ごとに)
@@ -119,7 +115,7 @@ export class RaytraceManager {
     canvas.style.cssFloat = "left";
     canvas.style.margin = "10px";
 
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext("2d") as CanvasRenderingContext2D;
 
     const img = new ImageData(canvas.width, canvas.height);
     for (let y = 0; y < img.height; y++) {
