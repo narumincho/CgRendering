@@ -120,6 +120,15 @@ export class Triangle implements BaseShape {
     return this.normal.clone();
   }
 
+  /**
+   *
+   * @param q ライト
+   * @param p 計算している場所
+   * @param e 視線の位置ベクトル
+   * @param v 視線の方向ベクトル
+   * @param shootRay
+   * @param currentDepth
+   */
   calcShading(
     q: PointLight,
     p: THREE.Vector3,
@@ -145,18 +154,44 @@ export class Triangle implements BaseShape {
       .multiplyScalar(2 * N.dot(L))
       .sub(L);
 
+    /** 計算している色の場所を(0,0,0)としたときの視線の方向ベクトル */
     const V: THREE.Vector3 = e
       .clone()
       .sub(p)
       .normalize();
 
     const specularReflection = ((this.ks * q.ii) / r ** 2) * R.dot(V) ** this.n;
-    if (0 < N.dot(L)) {
-      return this.color
+    /**
+     * 反射を考慮しない色
+     */
+    const objColor =
+      0 < N.dot(L)
+        ? this.color
+            .clone()
+            .multiplyScalar(ambientLight + diffuseReflection)
+            .add(
+              new THREE.Color(255, 255, 255).multiplyScalar(specularReflection)
+            )
+        : this.color.clone().multiplyScalar(ambientLight);
+
+    if (currentDepth <= RaytraceManager.MAX_DEPTH) {
+      const r = V.clone()
+        .multiplyScalar(-1)
+        .reflect(N.clone());
+
+      /**
+       * 反射した先の色
+       */
+      const refColor = shootRay(
+        p.clone().add(r.clone().multiplyScalar(0.001)),
+        r,
+        currentDepth + 1
+      );
+      return objColor
         .clone()
-        .multiplyScalar(ambientLight + diffuseReflection)
-        .add(new THREE.Color(255, 255, 255).multiplyScalar(specularReflection));
+        .multiplyScalar(0.5)
+        .add(refColor.clone().multiplyScalar(0.5));
     }
-    return this.color.clone().multiplyScalar(ambientLight);
+    return objColor;
   }
 }
