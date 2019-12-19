@@ -3,7 +3,7 @@ import { PointLight } from "./pointlight";
 import { BaseShape } from "./shapes/baseshape";
 import { Ellipse } from "./shapes/ellipse";
 import { Triangle } from "./shapes/triangle";
-import { ShootRay } from "../@types/ShootRay";
+import { ShootRay } from "./@types/ShootRay";
 
 import rtScene from "./scenes/scene4";
 

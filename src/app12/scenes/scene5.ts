@@ -1,4 +1,4 @@
-import Scene from "../../@types/rayTraceScene";
+import Scene from "../@types/rayTraceScene";
 
 const scene: Scene = {
   pointlight: { x: 200, y: 280, z: 100, ii: 100000 },

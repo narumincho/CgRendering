@@ -1,7 +1,7 @@
 ﻿import * as THREE from "three";
 import { BaseShape } from "./baseshape";
 import { PointLight } from "../pointlight";
-import { ShootRay } from "../../@types/ShootRay";
+import { ShootRay } from "../@types/ShootRay";
 
 export class Ellipse implements BaseShape {
   private mpositioin: THREE.Vector3;

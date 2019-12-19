@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { BaseShape } from "./baseshape";
 import { PointLight } from "../pointlight";
-import { ShootRay } from "../../@types/ShootRay";
+import { ShootRay } from "../@types/ShootRay";
 import { RaytraceManager } from "../app";
 
 export class Triangle implements BaseShape {
