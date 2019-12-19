@@ -10,7 +10,7 @@ import rtScene from "./scenes/scene4";
 export class RaytraceManager {
   private bgcolor: THREE.Color;
   private pointlight: PointLight;
-  private shapes: BaseShape[];
+  private shapes: Array<BaseShape>;
 
   public static readonly MAX_DEPTH = 5;
 
@@ -103,9 +103,8 @@ export class RaytraceManager {
         currentDepth
       );
       return objcol;
-    } else {
-      return this.bgcolor;
     }
+    return this.bgcolor;
   };
 
   // 画面部分の作成(表示する枠ごとに)

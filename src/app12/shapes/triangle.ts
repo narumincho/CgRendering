@@ -5,8 +5,8 @@ import { ShootRay } from "../@types/ShootRay";
 import { RaytraceManager } from "../app";
 
 export class Triangle implements BaseShape {
-  private mverticies: THREE.Vector3[];
-  get verticies(): THREE.Vector3[] {
+  private mverticies: Array<THREE.Vector3>;
+  get verticies(): Array<THREE.Vector3> {
     return this.mverticies;
   }
 
@@ -50,7 +50,7 @@ export class Triangle implements BaseShape {
     is: number,
     n: number
   ) {
-    this.mverticies = new Array();
+    this.mverticies = [];
     this.mverticies[0] = new THREE.Vector3().copy(p0);
     this.mverticies[1] = new THREE.Vector3().copy(p1);
     this.mverticies[2] = new THREE.Vector3().copy(p2);

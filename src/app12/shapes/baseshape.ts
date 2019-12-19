@@ -2,7 +2,7 @@
 import { PointLight } from "../pointlight";
 import { ShootRay } from "../@types/ShootRay";
 
-export interface BaseShape {
+export type BaseShape = {
   calcT(e: THREE.Vector3, v: THREE.Vector3): number;
   calcNorm(p: THREE.Vector3): THREE.Vector3;
   calcShading(
@@ -13,4 +13,4 @@ export interface BaseShape {
     shootRay: ShootRay,
     currentDepth: number
   ): THREE.Color;
-}
+};

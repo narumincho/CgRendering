@@ -1,16 +1,16 @@
-export default interface Scene {
-    pointlight: {
-        x: number,
-        y: number,
-        z: number,
-        ii: number,
-    },
-    bgcolor: {
-        r: number,
-        g: number,
-        b: number,
-    },
-    ellipses: {
+export default type Scene = {
+  pointlight: {
+    x: number;
+    y: number;
+    z: number;
+    ii: number;
+  };
+  bgcolor: {
+    r: number;
+    g: number;
+    b: number;
+  };
+  ellipses: Array<{
         x: number,
         y: number,
         z: number,
@@ -18,8 +18,8 @@ export default interface Scene {
         b: number,
         c: number,
         material: Material,
-    }[],
-    triangles: {
+    }>,
+  triangles: Array<{
         x0: number,
         y0: number,
         z0: number,
@@ -30,15 +30,15 @@ export default interface Scene {
         y2: number,
         z2: number,
         material: Material,
-    }[],
+    }>,
 }
 
-interface Material {
-    r: number,
-    g: number,
-    b: number,
-    ia: number,
-    id: number,
-    is: number,
-    n: number,
+type Material = {
+  r: number;
+  g: number;
+  b: number;
+  ia: number;
+  id: number;
+  is: number;
+  n: number;
 }
